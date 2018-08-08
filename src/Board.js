@@ -78,12 +78,48 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+    // set a counter that tracks the number of pieces on the board
+
+    // Update the stae of the board (browser) with this.get(rowIndex)
+    // Loop through the board from left to right
+      // If we find a piece
+      // Increment the total counter
+    // If counter is more than 1
+      // Return true if there is conflict
+      // else false
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      let currentRow = this.get(rowIndex);
+      let counter = 0;
+
+      for (let i = 0; i < currentRow.length; ++i) {
+        if (currentRow[i] === 1) {
+          counter++;
+        }
+      }
+      if (counter > 1) {
+        return true;
+      } else {
+        return false;
+      }
     },
+
+    //I: ~ invoke get(n) and store it in a variable
+    //iterate over n
+      //if hasRowConflictAt is true (conflict exists) -> return true
+      //otherwise return false
+    //O: if hasRowConflictAt returns true at any time
+      //return true
+
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      let allRows = this.get('n');
+
+      for (let i = 0; i < allRows; i++) {
+        if (this.hasRowConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -95,6 +131,7 @@
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
       return false; // fixme
+
     },
 
     // test if any columns on this board contain conflicts
