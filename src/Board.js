@@ -91,16 +91,15 @@
       let currentRow = this.get(rowIndex);
       let counter = 0;
 
-      for (let i = 0; i < currentRow.length; ++i) {
+      for (let i = 0; i < currentRow.length; i++) {
         if (currentRow[i] === 1) {
           counter++;
         }
       }
       if (counter > 1) {
         return true;
-      } else {
-        return false;
       }
+      return false;
     },
 
     //I: ~ invoke get(n) and store it in a variable
@@ -123,19 +122,59 @@
       return false; // fixme
     },
 
-
-
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
-    hasColConflictAt: function(colIndex) {
-      return false; // fixme
+    // Get current state of game board for columns
+    // Loop through columns
 
+    hasColConflictAt: function(colIndex) {
+      let currentColumns = this.get('n');
+
+      //when does counter increment?? when there's a conflict in first index of each row.
+      let counter = 0;
+
+      for (let i = 0; i < currentColumns; i++) {
+        let rowCol = this.get(i);
+        if (rowCol[colIndex] === 1) {
+          counter++;
+        }
+      }
+      if (counter > 1) {
+        return true;
+      }
+      return false;
     },
+
+    // hasColConflictAt: function(colIndex) {
+    //   let currentColumns = this.get('n');
+    //   let storage = {};
+
+    //   //when does counter increment?? when there's a conflict in first index of each row.
+    //   let counter = 0;
+
+    //   for (let i = 0; i < currentColumns; i++) {
+    //     if (storage[i]) {
+    //       storage[i]++;
+    //     } else {
+    //       storage[i] = 0;
+    //     }
+    //   }
+
+    //   return false;
+    // },
+
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      let allColumns = this.get('n');
+
+      for (let i = 0; i < allColumns; i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        };
+      }
       return false; // fixme
     },
 
