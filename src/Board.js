@@ -147,24 +147,6 @@
       return false;
     },
 
-    // hasColConflictAt: function(colIndex) {
-    //   let currentColumns = this.get('n');
-    //   let storage = {};
-
-    //   //when does counter increment?? when there's a conflict in first index of each row.
-    //   let counter = 0;
-
-    //   for (let i = 0; i < currentColumns; i++) {
-    //     if (storage[i]) {
-    //       storage[i]++;
-    //     } else {
-    //       storage[i] = 0;
-    //     }
-    //   }
-
-    //   return false;
-    // },
-
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
@@ -184,12 +166,45 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
+
+    // Return a boolean value if there is a conflict on the diagonal axis's.
+
+    // Input is starting at top left corner of board.
+    // Have a counter that keeps track of the numnber of peices we find across the board
+      // If the piece exists at the row, col, major, minor axis
+        // add one to the counter
+        // If counter > 1 return true
+
+    // _getFirstRowColumnIndexForMajorDiagonalOn: function(rowIndex, colIndex) {
+    //   return colIndex - rowIndex;
+    // },
+
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      let counter = 0;
+      let majorD = majorDiagonalColumnIndexAtFirstRow;
+
+      for (let i = 0; i < this.rows().length; ++i) {
+        if (this._isInBounds(i, majorD)) {
+          if (this.rows()[i][majorD] === 1) {
+            counter++;
+            if (counter > 1) {
+              return true;
+            }
+          }
+        }
+        majorD++;
+      }
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      for (let i = -this.rows().length; i < this.rows().length; ++i) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
@@ -200,11 +215,31 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+    let counter = 0;
+    let minorD = minorDiagonalColumnIndexAtFirstRow;
+
+    for (let i = 0; i < this.rows().length; i++) {
+       if (this._isInBounds(i, minorD)) {
+          if (this.rows()[i][minorD] === 1) {
+            counter++;
+            if (counter > 1) {
+              return true;
+            }
+          }
+        }
+        minorD--;
+    }
+    return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      for (let i = 0; i < this.rows().length * 2; ++i) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+
       return false; // fixme
     }
 
